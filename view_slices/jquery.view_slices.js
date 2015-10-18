@@ -13,7 +13,7 @@
      startComment : '<!-- component -->'
     ,endComment   : '<!-- /component -->'
     ,panelClass   : 'js-vs-panel'
-    ,position     : 'fixed' // or absolute
+    ,position     : 'fixed' // or 'absolute'
     ,heading      : true
     ,dummyText    : '$dummy'
     ,targetAttrs  : {
@@ -97,7 +97,7 @@
     ,$replaceBtn  = $('<a class="js-vs-replace js-vs-btn" href="#">テキストを置き換える</a>')
     ,$resetBtn    = $('<a class="js-vs-reset js-vs-btn" href="#">元に戻す</a>')
     ,$closeBtn    = $('<a class="js-vs-close js-vs-btn" href="#">閉じる</a>')
-    ,$textArea    = $('<textarea class="js-vs-textarea">'+ src +'</textarea>')
+    ,$textArea    = $('<textarea class="js-vs-textarea" spellcheck="false">'+ src +'</textarea>')
     ,$input       = $('<input type="text" class="js-vs-input" value="' + settings.dummyText + '" />')
     ,$checkList   = $(
        '<ul class="js-vs-checkList">'
@@ -117,13 +117,17 @@
       .append($input)
       .append($replaceBtn)
       .append($resetBtn)
-      .draggable()
-      .resizable()
       .on('mousedown',function(){
         _floatUp($panel,settings.panelClass);
       })
       .appendTo('body')
     ;
+    if($.isFunction($panel.draggable)){
+      $panel.draggable();
+    }
+    if($.isFunction($panel.resizable)){
+      $panel.resizable();
+    }
     $replaceBtn.on('click',function(){
       var
        targets   = {}
